@@ -1,1 +1,1 @@
-# covid-map
+A map showing the heatmap of the regions that have contracted COVID-19. Using HTML, CSS and JavaScript.

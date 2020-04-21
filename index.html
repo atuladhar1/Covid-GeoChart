@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heat Map of COVID-19</title>
+    <style>
+        * {
+            margin: 0;
+        }
+        
+        nav {
+            text-align: center;
+            width: heavy;
+            background-color: antiquewhite;
+        }
+        
+        nav span {
+            margin: 0px 200px;
+            font-size: 30px;
+            font-weight: bolder;
+            color: rgb(67, 69, 71)
+        }
+        
+        th,
+        td {
+            padding: 10px;
+            border: 1px black solid;
+        }
+        
+        #map {
+            height: 500px;
+            width: 500px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <span>Map</span>
+    </nav>
+    <table>
+        <tr>
+            <th>
+                Country
+            </th>
+            <th>
+                Infected
+            </th>
+            <th>
+                Dead
+            </th>
+            <th>
+                Recovered
+            </th>
+        </tr>
+    </table>
+    <div id="map">
+        <script>
+            var map;
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {
+                        lat: 39,
+                        lng: -98
+                    },
+                    zoom: 3.75
+                });
+            }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN7m_pEccymqcMbe4F_sIHOLIzw7fyYl0&callback=initMap" type="text/javascript"></script>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+
+</html>
