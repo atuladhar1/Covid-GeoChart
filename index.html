@@ -1,83 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heat Map of COVID-19</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <style>
-        * {
-            margin: 0;
-        }
-        
-        nav {
-            text-align: center;
-            width: heavy;
-            background-color: antiquewhite;
-        }
-        
-        nav span {
-            margin: 0px 200px;
-            font-size: 30px;
-            font-weight: bolder;
-            color: rgb(67, 69, 71)
-        }
-        
-        th,
-        td {
-            padding: 10px;
-            border: 1px black solid;
-        }
-        
-        #map {
-            height: 500px;
-            width: 500px;
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
+        #regions-div {
+            height: 180px;
         }
     </style>
 </head>
 
 <body>
-    <nav>
-        <span>Map</span>
-    </nav>
-    <table>
-        <tr>
-            <th>
-                Country
-            </th>
-            <th>
-                Infected
-            </th>
-            <th>
-                Dead
-            </th>
-            <th>
-                Recovered
-            </th>
-        </tr>
-    </table>
-    <div id="map">
-        <script>
-            var map;
-
-            function initMap() {
-                map = new google.maps.Map(document.getElementById('map'), {
-                    center: {
-                        lat: 39,
-                        lng: -98
-                    },
-                    zoom: 3.75
-                });
-            }
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN7m_pEccymqcMbe4F_sIHOLIzw7fyYl0&callback=initMap" type="text/javascript"></script>
+    <div id="regions_div" style="width: 900px; height: 500px;">
     </div>
-    <footer>
+    <script>
+        var settings = {
+            "url": "https://api.covid19api.com/summary",
+            "method": "GET",
+            "timeout": 0,
+        };
+        var json = fetch("https://api.covid19api.com/summary")
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
 
-    </footer>
+            });
+    </script>
+    <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['geochart'],
+            'mapsApiKey': 'AIzaSyBN7m_pEccymqcMbe4F_sIHOLIzw7fyYl0'
+        });
+        google.charts.setOnLoadCallback(drawRegionsMap);
+        var 
+        var json = $.getJSON("https://api.covid19api.com/summary", function(data) {
+            for (var i = 0; i < data.length; i++) {
+                var lat = parseFloat(data[i].lat);
+                var lon = parseFloat(data[i].lon);
+                var name = data[i].name;
+                var iata = data[i].iata;
+                var latlon = new google.maps.LatLng(lat, lon);
+                var marker = new google.maps.Marker({
+                    position: latlon,
+                    icon: "plane.png",
+                    map: map,
+                    title: name + ", " + iata
+                });
+
+            }
+        });
+
+        function drawRegionsMap(data) {
+
+            var options = {};
+
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+            chart.draw(data, options);
+        }
+    </script> -->
 </body>
+
 
 </html>
