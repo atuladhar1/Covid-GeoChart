@@ -14,35 +14,37 @@
     </div>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        google.charts.load('current', {
-            'packages': ['geochart'],
-            'mapsApiKey': 'AIzaSyBN7m_pEccymqcMbe4F_sIHOLIzw7fyYl0'
-        });
-        google.charts.setOnLoadCallback(drawRegionsMap);
-        var settings = {
-            "url": "https://api.covid19api.com/summary",
-            "method": "GET",
-            "timeout": 0,
-        };
+        //get JSON from the site and pass it through to process it.
+        var data = [
+            ["Country", "Confirmed Cases"]
+        ];
         var json = fetch("https://api.covid19api.com/summary")
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
-                var dat = data.Countries;
-
+                createData(data.Countries);
             });
+        //Process the json data and convert add it to an array with the set heading 
+        function createData(dict) {
+            for (var key in dict) {
+                var temp = dict[key];
+                data.push([temp.Country, temp.TotalConfirmed]);
+            }
+            console.log(data)
 
-        function drawRegionsMap(data) {
-            var options = {};
-            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-            chart.draw(data, options);
+            google.charts.load('current', {
+                'packages': ['geochart'],
+                'mapsApiKey': 'AIzaSyBN7m_pEccymqcMbe4F_sIHOLIzw7fyYl0'
+            });
+            google.charts.setOnLoadCallback(drawRegionsMap);
         }
 
-        function createData(key, value) {
-            for (i = 0; i < key.length(); i++) {
-                console.log(i);
-            }
+        function drawRegionsMap() {
+            var temp = google.visualization.arrayToDataTable(data);
+            var options = {};
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+            chart.draw(temp, options);
         }
     </script>
 </body>
