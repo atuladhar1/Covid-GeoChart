@@ -10,7 +10,6 @@
 </head>
 
 <body>
-    <a href="death.html">Death</a>
     <div id="regions_div" style="width: 900px; height: 500px;">
     </div>
     <a href="death.html">Death</a>
@@ -19,7 +18,7 @@
     <script type="text/javascript">
         //get JSON from the site and pass it through to process it.
         var confirmed_cases = [
-            ["Country", "Confirmed Cases"]
+            ["Country", "Total Deaths"]
         ];
         var json = fetch("https://api.covid19api.com/summary")
             .then((response) => {
@@ -32,7 +31,7 @@
         function createData(dict) {
             for (var key in dict) {
                 var temp = dict[key];
-                confirmed_cases.push([temp.Country, temp.TotalConfirmed]);
+                confirmed_cases.push([temp.Country, temp.TotalDeaths]);
             }
 
             google.charts.load('current', {
