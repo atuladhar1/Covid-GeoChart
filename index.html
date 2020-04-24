@@ -1,77 +1,110 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        var global = [
+            ["Days", "Confirmed Cases", "Deaths", "Recovered"]
+        ];
+        var json = fetch("https://api.covid19api.com/total/country/united-states")
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                createData(data);
+            });
+
+        function createData(dict) {
+            var i = 1;
+            for (var key in dict) {
+                var temp = dict[key];
+                global.push([i, temp.Confirmed, temp.Deaths, temp.Recovered]);
+                i += 1;
+            }
+            console.log(global);
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+        }
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(global);
+
+            var options = {
+                title: 'USA cases',
+                curveType: 'function',
+                legend: {
+                    position: 'bottom'
+                }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+            chart.draw(data, options);
+        }
+    </script>
     <style>
-        #regions-div {
-            height: 180px;
+        * {
+            margin: 0px;
         }
         
-        #main {
+        body {
             display: inline-flex;
+            background-color: #D7D7D7;
+            color: rgb(95, 95, 95);
+            height: 750px;
+        }
+        
+        nav {
+            margin: auto;
+            padding: 10px 15px;
+        }
+        
+        p {
+            padding: 10 0px;
+        }
+        
+        a {
+            margin: 10px;
+        }
+        
+        a:visited,
+        a:link {
+            text-decoration: none;
+            color: rgb(95, 95, 95);
+            background-color: rgba(247, 253, 255, 0.911);
+            padding: 14px 25px;
+            text-align: center;
+            display: inline-block;
+            border-radius: 4%;
+            width: 100px;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: rgb(255, 255, 255);
+            background-color: rgb(223, 195, 195);
+            padding: 14px 25px;
+            text-align: center;
+            display: inline-block;
+            border-radius: 4%;
         }
     </style>
 </head>
 
 <body>
     <nav>
-        <ul>
-            <li><a href="death.html">Map of Death</a></li>
-            <li><a href="recovered.html">Map of Recovery </a></li>
-            <li><a href="infected.html">Map of Infected</a>
-        </ul>
+        <p><a href="index.html">Main</a></p>
+        <p><a href="death.html">Deaths</a></p>
+        <p><a href="recovered.html">Recovered</a></p>
+        <p><a href="infected.html">Infected</a></p>
     </nav>
-    <div id="main">
-        <table id="table">
-            <th>Country</th>
-            <th>Infected</th>
-        </table>
-        <div id="regions_div" style="width: 900px; height: 500px;">
-        </div>
-    </div>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        //get JSON from the site and pass it through to process it.
-        var confirmed_cases = [
-            ["Country", "Confirmed Cases"]
-        ];
-        var json = fetch("https://api.covid19api.com/summary")
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                createData(data.Countries);
-            });
-        //Process the json data and convert add it to an array with the set heading 
-        function createData(dict) {
-            for (var key in dict) {
-                var temp = dict[key];
-                confirmed_cases.push([temp.Country, temp.TotalConfirmed]);
-                $("table").append("<tr><td>" + temp.Country + "</td><td>" + temp.TotalConfirmed + "</td></tr>");
-            }
-
-            google.charts.load('current', {
-                'packages': ['geochart'],
-                'mapsApiKey': 'AIzaSyBN7m_pEccymqcMbe4F_sIHOLIzw7fyYl0'
-            });
-            google.charts.setOnLoadCallback(drawRegionsMap);
-        }
-
-        function drawRegionsMap() {
-            var temp = google.visualization.arrayToDataTable(confirmed_cases);
-            var options = {
-                colorAxis: {
-                    colors: ['#f5f5f5', 'orange']
-                },
-                backgroundColor: '#ebe7dd',
-                defaultColor: 'white',
-            };
-            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-            chart.draw(temp, options);
-        }
-    </script>
 </body>
-
 
 </html>

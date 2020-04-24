@@ -2,12 +2,11 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         //get JSON from the site and pass it through to process it.
-        var cases = [
-            ["Country", "Total Recovered"]
+        var confirmed_cases = [
+            ["Country", "Confirmed Cases"]
         ];
         var json = fetch("https://api.covid19api.com/summary")
             .then((response) => {
@@ -20,8 +19,8 @@
         function createData(dict) {
             for (var key in dict) {
                 var temp = dict[key];
-                cases.push([temp.Country, temp.TotalRecovered]);
-                $("table").append("<tr><td>" + temp.Country + "</td><td>" + temp.TotalDeaths + "</td></tr>");
+                confirmed_cases.push([temp.Country, temp.TotalConfirmed]);
+                $("table").append("<tr><td>" + temp.Country + "</td><td>" + temp.TotalConfirmed + "</td></tr>");
             }
 
             google.charts.load('current', {
@@ -32,8 +31,11 @@
         }
 
         function drawRegionsMap() {
-            var temp = google.visualization.arrayToDataTable(cases);
+            var temp = google.visualization.arrayToDataTable(confirmed_cases);
             var options = {
+                colorAxis: {
+                    colors: ['#DBFFE0', 'orange']
+                },
                 backgroundColor: '#ebe7dd',
                 defaultColor: 'white',
             };
@@ -107,19 +109,20 @@
 <body>
     <nav>
         <p><a href="index.html">Main</a></p>
-        <p> <a href="death.html">Deaths</a></p>
-        <p><a href="recovered.html">Recovery </a></p>
-        <p> <a href="infected.html">Infected</a></p>
+        <p><a href="death.html">Deaths</a></p>
+        <p><a href="recovered.html">Recovered</a></p>
+        <p><a href="infected.html">Infected</a></p>
     </nav>
     <div id="main">
-        <table id="table">
-            <th>Country</th>
-            <th>Recovered</th>
+        <table id="table" style="border: 1px black solid;">
+            <tr id="head">
+                <th>Country</th>
+                <th>Infected</th>
+            </tr>
         </table>
-        <div id="regions_div" style="width: 1000px; height: 750px;">
+        <div id="regions_div" style="width:1000px; height:750px">
         </div>
     </div>
-
 </body>
 
 
