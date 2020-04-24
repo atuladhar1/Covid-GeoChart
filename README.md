@@ -1,1 +1,1 @@
-A map showing the heatmap of the regions that have contracted COVID-19. Using HTML, CSS and JavaScript.
+Main shows a line chart of Covid cases in the USA: deaths, recovered and confirmed. The rest of the maps show global chart color coded to show the number of infected, dead, and recovered in the world. Made using the Google charts api, GeoChart and LineChart, HTML, CSS, JQuery and AJAX. The covid data api used "https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest#e831c268-9da1-4d86-8b5a-8d7f61910af8."
