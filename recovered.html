@@ -6,19 +6,28 @@
         #regions-div {
             height: 180px;
         }
+        
+        #main {
+            display: inline-flex;
+        }
     </style>
 </head>
 
 <body>
-    <div id="regions_div" style="width: 900px; height: 500px;">
+    <div id="main">
+        <table id="table">
+            <th>Country</th>
+            <th>Infected</th>
+        </table>
+        <div id="regions_div" style="width: 900px; height: 500px;">
+        </div>
     </div>
     <a href="death.html">Death</a>
-    <table id="table"></table>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         //get JSON from the site and pass it through to process it.
-        var confirmed_cases = [
-            ["Country", "Total Deaths"]
+        var cases = [
+            ["Country", "Total Recovered"]
         ];
         var json = fetch("https://api.covid19api.com/summary")
             .then((response) => {
@@ -31,7 +40,8 @@
         function createData(dict) {
             for (var key in dict) {
                 var temp = dict[key];
-                confirmed_cases.push([temp.Country, temp.TotalDeaths]);
+                cases.push([temp.Country, temp.TotalRecovered]);
+                $("table").append("<tr><td>" + temp.Country + "</td><td>" + temp.TotalDeaths + "</td></tr>");
             }
 
             google.charts.load('current', {
@@ -42,8 +52,11 @@
         }
 
         function drawRegionsMap() {
-            var temp = google.visualization.arrayToDataTable(confirmed_cases);
-            var options = {};
+            var temp = google.visualization.arrayToDataTable(cases);
+            var options = {
+                backgroundColor: '#ebe7dd',
+                defaultColor: 'white',
+            };
             var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
             chart.draw(temp, options);
         }
