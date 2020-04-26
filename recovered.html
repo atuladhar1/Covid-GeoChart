@@ -21,7 +21,7 @@
             for (var key in dict) {
                 var temp = dict[key];
                 cases.push([temp.Country, temp.TotalRecovered]);
-                $("table").append("<tr><td>" + temp.Country + "</td><td>" + temp.TotalDeaths + "</td></tr>");
+                $("table").append("<tr><td>" + temp.Country + "</td><td>" + temp.TotalRecovered + "</td></tr>");
             }
 
             google.charts.load('current', {

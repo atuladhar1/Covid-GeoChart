@@ -6,33 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        var global = [
+        // for America
+        var america = [
             ["Days", "Confirmed Cases", "Deaths", "Recovered"]
         ];
-        var json = fetch("https://api.covid19api.com/total/country/united-states")
+        var canada = [
+            ["Days", "Confirmed Cases", "Deaths", "Recovered"]
+        ];
+        var json2 = fetch("https://api.covid19api.com/total/country/canada")
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
                 createData(data);
             });
+        var json1 = fetch("https://api.covid19api.com/total/country/united-states")
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                createDataAmerica(data);
+            });
 
-        function createData(dict) {
+        function createDataAmerica(dict) {
             var i = 1;
             for (var key in dict) {
                 var temp = dict[key];
-                global.push([i, temp.Confirmed, temp.Deaths, temp.Recovered]);
+                america.push([i, temp.Confirmed, temp.Deaths, temp.Recovered]);
                 i += 1;
             }
-            console.log(global);
+
             google.charts.load('current', {
                 'packages': ['corechart']
             });
-            google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(americaChart);
         }
 
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable(global);
+        function americaChart() {
+            var data = google.visualization.arrayToDataTable(america);
 
             var options = {
                 title: 'USA cases',
@@ -42,11 +53,12 @@
                 }
             };
 
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+            var chart = new google.visualization.LineChart(document.getElementById('america_chart'));
 
             chart.draw(data, options);
         }
     </script>
+
     <style>
         * {
             margin: 0px;
@@ -57,7 +69,6 @@
             background-color: #D7D7D7;
             color: rgb(95, 95, 95);
             height: 750px;
-            align-items: center;
         }
         
         nav {
@@ -95,6 +106,7 @@
             border-radius: 4%;
         }
     </style>
+
 </head>
 
 <body>
@@ -104,7 +116,13 @@
         <p><a href="recovered.html">Recovered</a></p>
         <p><a href="infected.html">Infected</a></p>
     </nav>
-    <div id="curve_chart" style="width: 1300px; height: 724px"></div>
+    <div style="display:block;">
+        <div id="america_chart" style="width: 1320px; height: 350px;">
+        </div>
+        <div id="canada_chart" style="width: 1320px; height: 350px;">
+        </div>
+    </div>
+    <br>
 </body>
 
 </html>
