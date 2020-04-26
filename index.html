@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@800&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -10,16 +11,6 @@
         var america = [
             ["Days", "Confirmed Cases", "Deaths", "Recovered"]
         ];
-        var canada = [
-            ["Days", "Confirmed Cases", "Deaths", "Recovered"]
-        ];
-        var json2 = fetch("https://api.covid19api.com/total/country/canada")
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                createData(data);
-            });
         var json1 = fetch("https://api.covid19api.com/total/country/united-states")
             .then((response) => {
                 return response.json();
@@ -80,12 +71,12 @@
             padding: 10 0px;
         }
         
-        a {
+        .navi {
             margin: 10px;
         }
         
-        a:visited,
-        a:link {
+        .navi:visited,
+        .navi:link {
             text-decoration: none;
             color: rgb(95, 95, 95);
             background-color: rgba(247, 253, 255, 0.911);
@@ -96,7 +87,7 @@
             width: 100px;
         }
         
-        a:hover {
+        .navi:hover {
             text-decoration: underline;
             color: rgb(255, 255, 255);
             background-color: rgb(223, 195, 195);
@@ -105,24 +96,43 @@
             display: inline-block;
             border-radius: 4%;
         }
+        
+        #para {
+            margin-top: 5px;
+            font-size: 20px;
+            line-height: 30px;
+            font-family: 'Roboto Slab', serif;
+            color: rgb(44, 116, 35)
+        }
+        
+        h2 {
+            font-size: 50px;
+            margin: 10px;
+            color: rgb(219, 31, 31)
+        }
     </style>
 
 </head>
 
 <body>
     <nav>
-        <p><a href="index.html">Main</a></p>
-        <p><a href="death.html">Deaths</a></p>
-        <p><a href="recovered.html">Recovered</a></p>
-        <p><a href="infected.html">Infected</a></p>
+        <p><a class="navi" href="index.html">Main</a></p>
+        <p><a class="navi" href="death.html">Deaths</a></p>
+        <p><a class="navi" href="recovered.html">Recovered</a></p>
+        <p><a class="navi" href="infected.html">Infected</a></p>
     </nav>
-    <div style="display:block;">
+    <div style="display:block; text-align:center;">
         <div id="america_chart" style="width: 1320px; height: 350px;">
         </div>
-        <div id="canada_chart" style="width: 1320px; height: 350px;">
-        </div>
+        <p>
+            <h2>How to avoid COVID-19</h2>
+            <p id="para">
+                Wash hands often.<br> Avoid close contact with people who are sick.<br> Cover mouth and nose with face cover when around other people. Cover coughs and sneezes.<br> Clean and disinfect frequently touched surfaces.<br> Avoid touching your
+                face and nose regions.<br> Follow the guidelines set by <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html">CDC</a> and flatten the curve.
+
+            </p>
+        </p>
     </div>
-    <br>
 </body>
 
 </html>
